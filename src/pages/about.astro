@@ -1,0 +1,67 @@
+---
+import Layout from '@layouts/Layout.astro';
+import { about } from '@lib/content';
+import { u } from '@lib/urls';
+import GlassCard from '@components/GlassCard.astro';
+---
+
+<Layout>
+  <section>
+    <div class="container">
+      <header class="page-head reveal">
+        <span class="eyebrow pill glass">{about.kicker}</span>
+        <h1>{about.title}</h1>
+        <p>{about.body[0]}</p>
+      </header>
+      <div class="grid">
+        <div class="about__media glass card-radius reveal">
+          <img src={u(about.image)} alt="Okan Innovations team on site" loading="eager" />
+        </div>
+        <div class="about__copy reveal">
+          <p>{about.body[1]}</p>
+          <GlassCard class="glass-strong" title="One contract" text="Design, decoration, electrical and MEP under a single agreement — no finger-pointing between trades." icon="ri-file-contract-line" />
+          <GlassCard class="glass-strong" title="One point of contact" text="A site manager who owns the programme from first sketch to final handover." icon="ri-user-line" />
+          <GlassCard class="glass-strong" title="Snag-free handover" text="Tested, certified and walked through with you before we consider the job done." icon="ri-check-double-line" />
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .page-head {
+    margin-bottom: var(--space-xl);
+    max-width: 70ch;
+  }
+  .grid {
+    display: grid;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+  .about__media {
+    aspect-ratio: 16/10;
+    overflow: hidden;
+  }
+  .about__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .about__copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+  .about__copy p {
+    color: var(--ink-secondary);
+    font-size: clamp(1rem, 0.95rem + 0.25vw, 1.15rem);
+  }
+  .glass-strong {
+    margin-top: var(--space-md);
+  }
+  @media (min-width: 960px) {
+    .grid {
+      grid-template-columns: 1.1fr 1fr;
+    }
+  }
+</style>

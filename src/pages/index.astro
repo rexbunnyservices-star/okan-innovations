@@ -1,29 +1,48 @@
 ---
 import Layout from '@layouts/Layout.astro';
-import { hero, about, stats, process, services, projects } from '@lib/content';
+import { hero, stats, zones } from '@lib/content';
 import { u } from '@lib/urls';
 import GlassCard from '@components/GlassCard.astro';
 ---
 
 <Layout>
-  <section class="hero">
+  <section class="hero warm">
     <div class="container hero__grid">
       <div class="hero__copy reveal">
-        <span class="eyebrow pill glass">{hero.eyebrow}</span>
-        <h1>{hero.title}</h1>
+        <span class="eyebrow pill glass">Architecture · Interiors · Landscapes</span>
+        <h1>Spaces That <span class="gold">Inspire</span></h1>
         <p class="lead">{hero.text}</p>
         <div class="hero__actions">
-          <a class="btn primary" href={u('/contact')}>Get a Quote</a>
-          <a class="btn ghost pill glass" href={u('/projects')}>See Our Work</a>
+          <a class="btn primary pill" href={u('/projects')}>Explore Our Work <span class="arrow">→</span></a>
+          <a class="btn ghost pill" href={u('/contact')}>Start a Project <span class="arrow">→</span></a>
         </div>
       </div>
       <div class="hero__media reveal">
-        <div class="hero__orb" aria-hidden="true"></div>
-        <figure class="hero__figure glass card-radius">
-          <img src={u(hero.image)} alt="Modern contemporary villa exterior — bright, airy" loading="eager" />
+        <div class="hero__orb warm-orb" aria-hidden="true"></div>
+        <figure class="hero__figure card-radius">
+          <img src={u(hero.image)} alt="Mountain villa at sunset — warm architectural photography" loading="eager" />
+          <div class="hero__grade" aria-hidden="true"></div>
         </figure>
         <GlassCard class="hero__chip" title={hero.chip.title} text={hero.chip.text} icon="ri-clipboard-line" />
       </div>
+    </div>
+  </section>
+
+  <section class="zone-gallery warm">
+    <div class="container">
+      <header class="zone__head reveal">
+        <span class="eyebrow pill glass">Spaces We Shape</span>
+        <h2>Explore by room</h2>
+      </header>
+      <figure class="zone__frame reveal">
+        <img class="zone__img" id="zoneImg" src={u(zones[0].image)} alt="Bedroom — Okan Innovations" loading="eager" />
+        <button class="zone__lens" aria-label="Zoom">🔍</button>
+      </figure>
+      <nav class="zone__pills reveal">
+        {zones.map((z) => (
+          <button class={`zone__pill ${z.id === 'bedroom' ? 'active' : ''}`} data-src={z.image}>{z.label}</button>
+        ))}
+      </nav>
     </div>
   </section>
 
@@ -40,13 +59,20 @@ import GlassCard from '@components/GlassCard.astro';
 </Layout>
 
 <style>
-  .hero {
+  .hero.warm {
     padding-top: var(--space-xl);
+    min-height: 70vh;
   }
   .hero__grid {
     display: grid;
     gap: var(--space-xl);
     align-items: center;
+  }
+  @media (min-width: 880px) {
+    .hero__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-2xl);
+    }
   }
   .hero__copy h1 {
     white-space: pre-line;
@@ -55,7 +81,13 @@ import GlassCard from '@components/GlassCard.astro';
     display: inline-flex;
     padding: 0.5rem 0.9rem;
     margin-bottom: var(--space-md);
-    font-size: 0.98rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .gold {
+    color: var(--accent);
   }
   .lead {
     max-width: 60ch;
@@ -70,32 +102,33 @@ import GlassCard from '@components/GlassCard.astro';
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.8rem 1.6rem;
+    padding: 0.85rem 1.7rem;
     border-radius: var(--radius-pill);
     font-weight: 500;
+    font-size: 0.95rem;
   }
   .btn.primary {
-    background: linear-gradient(120deg, #2b6cf6, #3a7bff);
+    background: var(--accent);
     color: var(--accent-ink);
     box-shadow: var(--shadow-elevated);
   }
-  .btn.primary::after {
-    content: '\ea6c';
-    font-family: 'remixicon';
-  }
   .btn.ghost {
     color: var(--ink-primary);
+    background: rgba(255, 255, 255, 0.6);
+  }
+  .arrow {
+    font-size: 0.85em;
   }
   .hero__media {
     position: relative;
     display: grid;
     place-items: center;
   }
-  .hero__orb {
+  .hero__orb.warm-orb {
     position: absolute;
     inset: 10% 15% -10% 15%;
     border-radius: 50%;
-    background: radial-gradient(circle at 50% 30%, rgba(255,255,255,0.9), rgba(43,108,246,0.25));
+    background: radial-gradient(circle at 50% 30%, rgba(253, 243, 232, 0.9), rgba(180, 83, 9, 0.15));
     filter: blur(40px);
     opacity: 0.9;
     pointer-events: none;
@@ -103,8 +136,16 @@ import GlassCard from '@components/GlassCard.astro';
   .hero__figure {
     position: relative;
     overflow: hidden;
+    border-radius: var(--radius-xl);
     aspect-ratio: 4/5;
     width: min(560px, 90vw);
+  }
+  .hero__grade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(180, 83, 9, 0.10) 0%, rgba(180, 83, 9, 0.40) 100%);
+    pointer-events: none;
+    border-radius: inherit;
   }
   .hero__figure img {
     width: 100%;
@@ -116,6 +157,65 @@ import GlassCard from '@components/GlassCard.astro';
     left: clamp(1rem, 1vw, 2rem);
     bottom: clamp(1rem, 1vw, 2rem);
     max-width: min(280px, 80vw);
+  }
+
+  .zone-gallery.warm {
+    padding-top: var(--space-xl);
+  }
+  .zone__head {
+    margin-bottom: var(--space-lg);
+    max-width: 60ch;
+  }
+  .zone__frame {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-xl);
+    aspect-ratio: 16/10;
+    width: 100%;
+  }
+  .zone__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+  .zone__lens {
+    position: absolute;
+    right: var(--space-md);
+    bottom: var(--space-md);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--border-glass);
+    cursor: pointer;
+    font-size: 1.25rem;
+    line-height: 1;
+    display: grid;
+    place-items: center;
+  }
+  .zone__pills {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+    margin-top: var(--space-lg);
+  }
+  .zone__pill {
+    padding: 0.55rem 1.15rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--border-glass);
+    background: var(--surface-glass);
+    color: var(--ink-secondary);
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: transform 120ms ease;
+  }
+  .zone__pill.active {
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-color: transparent;
   }
   .stats__strip {
     display: grid;
@@ -147,3 +247,15 @@ import GlassCard from '@components/GlassCard.astro';
     }
   }
 </style>
+
+<script>
+  const pills = document.querySelectorAll('.zone__pill');
+  const img = document.getElementById('zoneImg');
+  pills.forEach((p) => {
+    p.addEventListener('click', () => {
+      pills.forEach((x) => x.classList.remove('active'));
+      p.classList.add('active');
+      img.src = p.dataset.src;
+    });
+  });
+</script>

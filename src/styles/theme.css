@@ -162,3 +162,19 @@ section {
   white-space: nowrap;
   border-width: 0;
 }
+
+/* Warm palette — scoped to hero + zone gallery only. Interior pages keep
+   the light-blue glassmorphism tokens above. */
+.warm {
+  --bg-950: #fbf6f0;
+  --bg-900: radial-gradient(120% 120% at 50% 0%, #fdf3e8 0%, #f7e9d2 60%, #f3e0c8 100%);
+  --surface-glass: rgba(255, 255, 255, 0.5);
+  --surface-glass-strong: rgba(255, 255, 255, 0.6);
+  --ink-primary: #3e2723;
+  --ink-secondary: rgba(62, 39, 35, 0.72);
+  --ink-tertiary: rgba(62, 39, 35, 0.5);
+  --accent: #b45309;
+  --accent-ink: #ffffff;
+  --border-glass: rgba(255, 255, 255, 0.35);
+  --ring: rgba(180, 83, 9, 0.25);
+}

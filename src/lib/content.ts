@@ -27,6 +27,7 @@ export const nav = [
   { href: '/', label: 'Home' },
   { href: '/services', label: 'Services' },
   { href: '/projects', label: 'Projects' },
+  { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
 ];
 
@@ -157,8 +158,21 @@ export const about = {
 
 export const hero = {
   eyebrow: 'Design-and-Build Contractor',
-  title: 'Design it. Build it.\nOne team owns both.',
+  title: 'Spaces That Inspire',
   text: 'Interior design, decoration, electrical and MEP — coordinated under a single contract so your project lands on time, on budget and snag-free.',
   image: '/renders/hero-villa.jpg',
   chip: { title: 'Turnkey Delivery', text: 'Concept → handover, no handover gap' },
 };
+
+export type Zone = {
+  id: string;
+  label: string;
+  image: string;
+};
+
+export const zones: Zone[] = [
+  { id: 'bedroom', label: 'Bedroom', image: '/renders/proj-03.jpg' },
+  { id: 'kitchen', label: 'Kitchen', image: '/renders/proj-02.jpg' },
+  { id: 'bathroom', label: 'Bathroom', image: '/renders/proj-05.jpg' },
+  { id: 'terrace', label: 'Terrace', image: '/renders/terrace.jpg' },
+];
