@@ -1,10 +1,16 @@
 ---
 import { nav, site } from '@lib/content';
 import { u } from '@lib/urls';
+
+const { dark = false } = Astro.props;
 ---
 
-<header class="nav">
+<header class="nav" data-dark={dark ? 'true' : undefined}>
   <div class="container nav__inner glass pill">
+    <button class="nav__burger" aria-expanded="false" aria-controls="nav-menu" aria-label="Menu">
+      <span class="nav__burger-inner" aria-hidden="true"></span>
+      <span class="sr-only">Menu</span>
+    </button>
     <a class="nav__logo" href={u('/')}>
       <span class="nav__mark" aria-hidden="true">O</span>
       <span>{site.name}</span>
@@ -15,16 +21,26 @@ import { u } from '@lib/urls';
       ))}
     </nav>
     <a class="nav__cta" href={u('/contact')}>Get Quote</a>
+    <nav class="nav__menu" id="nav-menu" role="navigation">
+      {nav.map((item) => (
+        <a class="nav__menu-link" href={u(item.href)}>{item.label}</a>
+      ))}
+      <a class="nav__menu-cta" href={u('/contact')}>Get Quote</a>
+    </nav>
   </div>
 </header>
 
 <style>
   .nav {
-    position: sticky;
+    position: fixed;
     top: var(--space-md);
-    z-index: 10;
+    left: 0;
+    right: 0;
+    z-index: 30;
     padding-inline: var(--space-md);
-    margin-top: var(--space-md);
+  }
+  body.nav-open {
+    overflow: hidden;
   }
   .nav__inner {
     display: flex;
@@ -50,6 +66,40 @@ import { u } from '@lib/urls';
     border: 1px solid var(--border-glass);
     box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.25);
   }
+  .nav__burger {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--border-glass);
+    background: var(--surface-glass);
+    cursor: pointer;
+  }
+  .nav__burger-inner {
+    position: relative;
+    width: 20px;
+    height: 1.4px;
+    background: var(--ink-primary);
+    border-radius: 2px;
+  }
+  .nav__burger-inner::before,
+  .nav__burger-inner::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 1.4px;
+    background: var(--ink-primary);
+    border-radius: 2px;
+    transition: transform 150ms ease;
+  }
+  .nav__burger-inner::before { top: -7px; }
+  .nav__burger-inner::after { bottom: -7px; }
+  [data-dark="true"] .nav__burger-inner,
+  [data-dark="true"] .nav__burger-inner::before,
+  [data-dark="true"] .nav__burger-inner::after { background: #ffffff; }
   .nav__links {
     display: none;
     gap: var(--space-md);
@@ -61,6 +111,8 @@ import { u } from '@lib/urls';
   .nav__link:hover {
     color: var(--ink-primary);
   }
+  [data-dark="true"] .nav__link { color: #ffffff; }
+  [data-dark="true"] .nav__link:hover { color: #ffffff; }
   .nav__cta {
     display: inline-flex;
     align-items: center;
@@ -80,9 +132,60 @@ import { u } from '@lib/urls';
   .nav__cta:hover::after {
     transform: translateX(4px);
   }
+  .nav__menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    background: var(--surface-glass-strong);
+    backdrop-filter: var(--blur-lg);
+    -webkit-backdrop-filter: var(--blur-lg);
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: clamp(3rem, 6vw, 7rem) var(--space-md) var(--space-xl);
+    overflow-y: auto;
+  }
+  .nav.open .nav__menu { display: flex; }
+  .nav__menu-link {
+    font-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.75rem);
+    color: var(--ink-primary);
+    font-weight: 500;
+  }
+  .nav__menu-cta {
+    margin-top: var(--space-md);
+    padding: 0.85rem 1.4rem;
+    border-radius: var(--radius-pill);
+    background: linear-gradient(120deg, #2b6cf6, #3a7bff);
+    color: var(--accent-ink);
+    font-weight: 500;
+    text-align: center;
+    box-shadow: var(--shadow-elevated);
+  }
   @media (min-width: 880px) {
-    .nav__links {
-      display: flex;
-    }
+    .nav__links { display: flex; }
+    .nav__burger { display: none; }
+    .nav__menu { display: none; }
   }
 </style>
+<script>
+  const nav = document.querySelector('.nav');
+  const burger = document.querySelector('.nav__burger');
+  const links = document.querySelectorAll('.nav__menu-link, .nav__menu-cta');
+  const toggle = () => {
+    const open = !nav.classList.contains('open');
+    nav.classList.toggle('open');
+    document.body.classList.toggle('nav-open', open);
+    burger.setAttribute('aria-expanded', String(open));
+  };
+  burger.addEventListener('click', toggle);
+  links.forEach((a) => a.addEventListener('click', () => {
+    nav.classList.remove('open');
+    document.body.classList.remove('nav-open');
+  }));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      nav.classList.remove('open');
+      document.body.classList.remove('nav-open');
+    }
+  });
+</script>

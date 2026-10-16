@@ -157,11 +157,17 @@ export const about = {
 };
 
 export const hero = {
-  eyebrow: 'Design-and-Build Contractor',
+  eyebrow: 'Architecture · Interiors · Landscapes',
   title: 'Spaces That Inspire',
   text: 'Interior design, decoration, electrical and MEP — coordinated under a single contract so your project lands on time, on budget and snag-free.',
   image: '/renders/hero-villa.jpg',
   chip: { title: 'Turnkey Delivery', text: 'Concept → handover, no handover gap' },
+};
+
+export const zonesHeader = {
+  eyebrow: 'Spaces We Shape',
+  title: 'Explore by room',
+  text: 'Bedroom, kitchen, bathroom and terrace — fit out under one contract, every trade sequenced.',
 };
 
 export type Zone = {

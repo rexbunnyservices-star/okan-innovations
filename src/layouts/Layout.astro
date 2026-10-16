@@ -32,7 +32,7 @@ const { site: siteURL } = Astro;
     <slot name="head" />
   </head>
   <body>
-    <Nav />
+    <Nav dark />
     <main>
       <slot />
     </main>
@@ -52,6 +52,15 @@ const { site: siteURL } = Astro;
     opacity: 1;
     transform: translateY(0);
     filter: blur(0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1 !important;
+      transform: none !important;
+      filter: none !important;
+      transition: none !important;
+      will-change: auto;
+    }
   }
 </style>
 
