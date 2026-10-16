@@ -1,0 +1,88 @@
+---
+import { nav, site } from '@lib/content';
+import { u } from '@lib/urls';
+---
+
+<header class="nav">
+  <div class="container nav__inner glass pill">
+    <a class="nav__logo" href={u('/')}>
+      <span class="nav__mark" aria-hidden="true">O</span>
+      <span>{site.name}</span>
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      {nav.map((item) => (
+        <a class="nav__link" href={u(item.href)}>{item.label}</a>
+      ))}
+    </nav>
+    <a class="nav__cta" href={u('/contact')}>Get Quote</a>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: sticky;
+    top: var(--space-md);
+    z-index: 10;
+    padding-inline: var(--space-md);
+    margin-top: var(--space-md);
+  }
+  .nav__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    padding: 0.7rem 1.1rem;
+  }
+  .nav__logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .nav__mark {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 30%, #fff, #dce8ff);
+    border: 1px solid var(--border-glass);
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.25);
+  }
+  .nav__links {
+    display: none;
+    gap: var(--space-md);
+  }
+  .nav__link {
+    font-size: 0.98rem;
+    color: var(--ink-secondary);
+  }
+  .nav__link:hover {
+    color: var(--ink-primary);
+  }
+  .nav__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.7rem 1.4rem;
+    border-radius: var(--radius-pill);
+    background: linear-gradient(120deg, #2b6cf6, #3a7bff);
+    color: var(--accent-ink);
+    font-weight: 500;
+    box-shadow: var(--shadow-elevated);
+  }
+  .nav__cta::after {
+    content: '\ea6c';
+    font-family: 'remixicon';
+    transition: transform 200ms ease;
+  }
+  .nav__cta:hover::after {
+    transform: translateX(4px);
+  }
+  @media (min-width: 880px) {
+    .nav__links {
+      display: flex;
+    }
+  }
+</style>

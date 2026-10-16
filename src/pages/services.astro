@@ -1,0 +1,119 @@
+---
+import Layout from '@layouts/Layout.astro';
+import { services } from '@lib/content';
+import { u } from '@lib/urls';
+---
+
+<Layout>
+  <section>
+    <div class="container">
+      <header class="page-head reveal">
+        <span class="eyebrow pill glass">Services</span>
+        <h1>One team. Four trades. Zero gaps.</h1>
+        <p>Design, decoration, electrical and MEP — coordinated to prevent the clash that usually eats time and budget.</p>
+      </header>
+      <div class="grid">
+        {services.map((s, i) => (
+          <article class={`card glass card-radius reveal`} style={`--i:${i}`}>
+            <figure class="card__media">
+              <img src={u(s.image)} alt={`${s.title} — Okan Innovations`} loading="lazy" />
+            </figure>
+            <div class="card__content">
+              <div class="card__header">
+                <span class="num">{s.num}</span>
+                <h3>{s.title}</h3>
+              </div>
+              <p>{s.blurb}</p>
+              <div class="split">
+                <div>
+                  <h5>Scope</h5>
+                  <ul>
+                    {s.scope.slice(0,3).map((it) => <li>{it}</li>)}
+                  </ul>
+                </div>
+                <div>
+                  <h5>Deliverables</h5>
+                  <ul>
+                    {s.deliverables.slice(0,3).map((it) => <li>{it}</li>)}
+                  </ul>
+                </div>
+              </div>
+              <div class="card__meta">
+                <span>Timeline: {s.timeline}</span>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .page-head {
+    margin-bottom: var(--space-xl);
+    max-width: 80ch;
+  }
+  .eyebrow {
+    display: inline-flex;
+    padding: 0.5rem 0.9rem;
+    margin-bottom: var(--space-md);
+  }
+  .grid {
+    display: grid;
+    gap: var(--space-xl);
+  }
+  .card {
+    display: grid;
+    overflow: hidden;
+  }
+  .card__media {
+    margin: 0;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+  }
+  .card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .card__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+  }
+  .card__header {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-sm);
+  }
+  .num {
+    font-family: var(--font-mono);
+    font-size: clamp(1.25rem, 1.2rem + 0.25vw, 1.5rem);
+    color: var(--accent);
+  }
+  .split {
+    display: grid;
+    gap: var(--space-md);
+  }
+  ul {
+    margin: 0;
+    padding-left: 1.2rem;
+    color: var(--ink-secondary);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .card__meta {
+    color: var(--ink-tertiary);
+  }
+  @media (min-width: 960px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .split {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

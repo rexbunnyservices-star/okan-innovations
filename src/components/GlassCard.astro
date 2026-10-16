@@ -1,0 +1,32 @@
+---
+const { title, text, icon = 'ri-building-line', class: klass = '' } = Astro.props;
+---
+
+<div class={`glass card-radius glass-card ${klass}`}>
+  {icon && <i class={icon} aria-hidden="true"></i>}
+  <div>
+    {title && <h4>{title}</h4>}
+    {text && <p>{text}</p>}
+  </div>
+</div>
+
+<style>
+  .glass-card {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+  }
+  .glass-card i {
+    font-size: clamp(1.25rem, 1.2rem + 0.25vw, 1.5rem);
+    color: var(--accent);
+  }
+  .glass-card h4 {
+    margin-bottom: 0.25rem;
+    font-size: clamp(1.05rem, 1rem + 0.25vw, 1.25rem);
+  }
+  .glass-card p {
+    margin-bottom: 0;
+    color: var(--ink-secondary);
+  }
+</style>

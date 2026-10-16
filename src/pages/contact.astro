@@ -1,0 +1,163 @@
+---
+import Layout from '@layouts/Layout.astro';
+import { site } from '@lib/content';
+import { buildQuote } from '@lib/quote';
+
+const f = { name: '', phone: '', service: 'Interior Design', scope: '', message: '' };
+const q = buildQuote(f);
+---
+
+<Layout>
+  <section>
+    <div class="container">
+      <header class="page-head reveal">
+        <span class="eyebrow pill glass">Contact</span>
+        <h1>Tell us about your project.</h1>
+        <p>One point of contact. Reply within a working day.</p>
+      </header>
+      <div class="panel glass card-radius reveal">
+        <div class="panel__copy">
+          <h3>Get a fast quote</h3>
+          <p>Prefer WhatsApp if you have drawings or references to share.</p>
+          <ul class="list">
+            <li><i class="ri-map-pin-line"></i> {site.city} — serving {site.city} and surroundings</li>
+            {site.whatsapp && <li><i class="ri-whatsapp-line"></i> WhatsApp available</li>}
+            <li><i class="ri-mail-line"></i> <a href={`mailto:${site.email}`}>{site.email}</a></li>
+          </ul>
+        </div>
+        <form class="form" onsubmit="return goQuote(event)">
+          <div class="field">
+            <label for="name">Name</label>
+            <input id="name" name="name" required />
+          </div>
+          <div class="field">
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" inputmode="tel" pattern="[0-9+\-\s()]{7,20}" />
+          </div>
+          <div class="field">
+            <label for="service">Service</label>
+            <select id="service" name="service">
+              <option>Interior Design</option>
+              <option>Interior Decoration &amp; Fit-Out</option>
+              <option>Electrical Solutions</option>
+              <option>MEP Engineering</option>
+              <option>Full Design-and-Build</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="scope">Project scope</label>
+            <input id="scope" name="scope" placeholder="e.g. 2BHK apartment, 40-desk office" />
+          </div>
+          <div class="field field--full">
+            <label for="message">Brief</label>
+            <textarea id="message" name="message" rows="5" placeholder="Area, target start, must-haves, any reference images/links"></textarea>
+          </div>
+          <button class="btn primary" type="submit">Send via WhatsApp / Email</button>
+          <p class="tiny">Opens your app. No data stored on this server.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { buildQuote } from '@lib/quote';
+  import { site } from '@lib/content';
+
+  window.goQuote = function (e) {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const f = {
+      name: String(fd.get('name') || ''),
+      phone: String(fd.get('phone') || ''),
+      service: String(fd.get('service') || ''),
+      scope: String(fd.get('scope') || ''),
+      message: String(fd.get('message') || ''),
+    };
+    const q = buildQuote(f, site);
+    window.location.href = q.primary;
+    return false;
+  };
+</script>
+
+<style>
+  .page-head {
+    margin-bottom: var(--space-xl);
+    max-width: 80ch;
+  }
+  .eyebrow {
+    display: inline-flex;
+    padding: 0.5rem 0.9rem;
+    margin-bottom: var(--space-md);
+  }
+  .panel {
+    display: grid;
+    gap: var(--space-xl);
+    padding: var(--space-lg);
+  }
+  .list {
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    color: var(--ink-secondary);
+  }
+  .list i {
+    color: var(--accent);
+    margin-right: 0.5rem;
+  }
+  .form {
+    display: grid;
+    gap: var(--space-md);
+    grid-template-columns: 1fr;
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .field label {
+    font-weight: 500;
+  }
+  .field input,
+  .field select,
+  .field textarea {
+    padding: 0.8rem 1rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-glass);
+    background: rgba(255,255,255,0.7);
+    font: inherit;
+    color: var(--ink-primary);
+  }
+  .field textarea {
+    resize: vertical;
+  }
+  .btn.primary {
+    justify-self: start;
+    border: none;
+    cursor: pointer;
+    padding: 0.9rem 1.8rem;
+    border-radius: var(--radius-pill);
+    background: linear-gradient(120deg, #2b6cf6, #3a7bff);
+    color: var(--accent-ink);
+    font-weight: 500;
+    box-shadow: var(--shadow-elevated);
+  }
+  .tiny {
+    color: var(--ink-tertiary);
+    font-size: 0.92rem;
+  }
+  @media (min-width: 920px) {
+    .panel {
+      grid-template-columns: 0.8fr 1.2fr;
+    }
+    .form {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .field--full {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

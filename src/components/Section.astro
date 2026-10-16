@@ -1,0 +1,29 @@
+---
+const { kicker, title, text = '', class: klass = '' } = Astro.props;
+---
+
+<section class={`section ${klass}`}>
+  <div class="container">
+    <header class="section__head reveal">
+      {kicker && <span class="eyebrow pill glass">{kicker}</span>}
+      {title && <h2>{title}</h2>}
+      {text && <p class="lead">{text}</p>}
+    </header>
+    <slot />
+  </div>
+</section>
+
+<style>
+  .section__head {
+    margin-bottom: var(--space-xl);
+    max-width: 80ch;
+  }
+  .eyebrow {
+    display: inline-flex;
+    padding: 0.5rem 0.9rem;
+    margin-bottom: var(--space-md);
+  }
+  .lead {
+    font-size: clamp(1.05rem, 1rem + 0.25vw, 1.25rem);
+  }
+</style>
