@@ -1,11 +1,11 @@
----
+﻿---
 import { nav, site } from '@lib/content';
 import { u } from '@lib/urls';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
 import '../styles/theme.css';
 
-const { site: siteURL } = Astro;
+const siteURL = Astro.url || Astro.site;
 ---
 
 <!doctype html>
@@ -13,16 +13,16 @@ const { site: siteURL } = Astro;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{site.name} — {site.tagline}</title>
+    <title>{site.name} â€” {site.tagline}</title>
     <meta name="description" content={site.description} />
-    <meta property="og:title" content={`${site.name} — ${site.tagline}`} />
+    <meta property="og:title" content={`${site.name} â€” ${site.tagline}`} />
     <meta property="og:description" content={site.description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={siteURL ? siteURL.origin : 'https://rexbunnyservices-star.github.io/okan-innovations'} />
-    <meta property="og:image" content={`${siteURL ? siteURL.origin : ''}${u(site.image)}`} />
+    <meta property="og:image" content={`${siteURL ? siteURL.origin : ""}${site.image}`} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#3e2723" />
-    <link rel="canonical" href={siteURL ? `${siteURL.origin}${siteURL.pathname}`.replace(/\/index\.html$/, '/').replace(/\/+$/, '/') : 'https://rexbunnyservices-star.github.io/okan-innovations/'} />
+    <link rel="canonical" href={siteURL ? `${siteURL.origin}${(siteURL.pathname||"").replace(/\/index\.html$/, "/").replace(/\/+$/, "/")}` : "https://rexbunnyservices-star.github.io/okan-innovations/"} />
     <script type="application/ld+json" is:inline>
       {JSON.stringify({
         "@context": "https://schema.org",
@@ -32,8 +32,8 @@ const { site: siteURL } = Astro;
         "address": { "@type": "PostalAddress", "addressLocality": site.city, "addressRegion": "Uttarakhand", "addressCountry": "IN" },
         "areaServed": site.areaServed,
         "hoursAvailable": { "@type": "OpeningHoursSpecification", "opens": "09:00", "closes": "18:00", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"] },
-        "image": u(site.image),
-        "url": siteURL ? `${siteURL.origin}${siteURL.pathname}`.replace(/\/+$/, '/') || `${siteURL.origin}/` : 'https://rexbunnyservices-star.github.io/okan-innovations/'
+    <meta property="og:image" content={`${siteURL ? siteURL.origin : ""}${site.image}`} />
+        "url": siteURL ? `${siteURL.origin}${(siteURL.pathname||"").replace(/\/+$/, "/") || siteURL.origin + "/"}` : "https://rexbunnyservices-star.github.io/okan-innovations/"
       })}
     </script>
     <link rel="preconnect" href="https://api.fontshare.com" crossorigin />

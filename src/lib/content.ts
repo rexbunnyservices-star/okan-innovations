@@ -20,14 +20,12 @@ export const site = {
   areaServed: ['Dehradun', 'Dehradun district', 'Uttarakhand'],
   hours: 'Sat–Thu, 9:00 – 18:00',
   locale: 'en',
-  image: '/renders/hero-villa.jpg',
 };
-
 export const nav = [
   { href: '/', label: 'Home' },
   { href: '/services', label: 'Services' },
   { href: '/projects', label: 'Projects' },
-  { href: '/about', label: 'About' },
+  { href: '/about', label: 'About Us' },
   { href: '/contact', label: 'Contact' },
 ];
 
