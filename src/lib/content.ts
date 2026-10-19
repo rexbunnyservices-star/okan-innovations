@@ -173,12 +173,13 @@ export const zonesHeader = {
 export type Zone = {
   id: string;
   label: string;
+  alt: string;
   image: string;
 };
 
 export const zones: Zone[] = [
-  { id: 'bedroom', label: 'Bedroom', image: '/renders/proj-03.jpg' },
-  { id: 'kitchen', label: 'Kitchen', image: '/renders/proj-02.jpg' },
-  { id: 'bathroom', label: 'Bathroom', image: '/renders/proj-05.jpg' },
-  { id: 'terrace', label: 'Terrace', image: '/renders/terrace.jpg' },
+  { id: 'bedroom', label: 'Bedroom', alt: 'Finished bedroom with acoustic panelling and a bespoke headboard wall', image: '/renders/proj-03.jpg' },
+  { id: 'kitchen', label: 'Kitchen', alt: 'Stone tops with handleless cabinetry and integrated appliances', image: '/renders/proj-02.jpg' },
+  { id: 'bathroom', label: 'Bathroom', alt: 'Book-matched marble wall with wet-zone lighting and underfloor heating', image: '/renders/proj-05.jpg' },
+  { id: 'terrace', label: 'Terrace', alt: 'Outdoor terrace with scenic mountain view', image: '/renders/terrace.jpg' },
 ];

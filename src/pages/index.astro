@@ -16,8 +16,8 @@ import GlassCard from '@components/GlassCard.astro';
           <h1>Spaces That <span class="gold">Inspire</span></h1>
           <p class="lead">{hero.text}</p>
           <div class="hero__actions">
-            <a class="btn primary pill" href={u('/projects')}>Explore Our Work <span class="arrow">→</span></a>
-            <a class="btn ghost pill" href={u('/contact')}>Start a Project <span class="arrow">→</span></a>
+            <a class="btn primary pill" href={u('/projects')}>Explore Our Work <span class="arrow" aria-hidden="true">→</span></a>
+            <a class="btn ghost pill" href={u('/contact')}>Start a Project <span class="arrow" aria-hidden="true">→</span></a>
           </div>
         </div>
       </div>
@@ -137,7 +137,19 @@ import GlassCard from '@components/GlassCard.astro';
   }
   .btn.ghost {
     color: var(--ink-primary);
-    background: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid var(--border-glass);
+  }
+  .btn:focus-visible,
+  .hero__pill:focus-visible,
+  .nav__burger:focus-visible,
+  .nav__link:focus-visible,
+  .nav__menu-link:focus-visible,
+  .nav__menu-cta:focus-visible,
+  .nav__cta:focus-visible {
+    outline: 3px solid var(--ring);
+    outline-offset: 2px;
+    border-radius: var(--radius-pill);
   }
   .arrow {
     font-size: 0.85em;

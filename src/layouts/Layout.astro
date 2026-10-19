@@ -18,8 +18,24 @@ const { site: siteURL } = Astro;
     <meta property="og:title" content={`${site.name} — ${site.tagline}`} />
     <meta property="og:description" content={site.description} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={siteURL ? siteURL.origin : 'https://rexbunnyservices-star.github.io/okan-innovations'} />
     <meta property="og:image" content={`${siteURL ? siteURL.origin : ''}${u(site.image)}`} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#3e2723" />
+    <link rel="canonical" href={siteURL ? `${siteURL.origin}${siteURL.pathname}`.replace(/\/index\.html$/, '/').replace(/\/+$/, '/') : 'https://rexbunnyservices-star.github.io/okan-innovations/'} />
+    <script type="application/ld+json" is:inline>
+      {JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "GeneralContractor",
+        "name": site.name,
+        "description": site.description,
+        "address": { "@type": "PostalAddress", "addressLocality": site.city, "addressRegion": "Uttarakhand", "addressCountry": "IN" },
+        "areaServed": site.areaServed,
+        "hoursAvailable": { "@type": "OpeningHoursSpecification", "opens": "09:00", "closes": "18:00", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"] },
+        "image": u(site.image),
+        "url": siteURL ? `${siteURL.origin}${siteURL.pathname}`.replace(/\/+$/, '/') || `${siteURL.origin}/` : 'https://rexbunnyservices-star.github.io/okan-innovations/'
+      })}
+    </script>
     <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,7 +48,7 @@ const { site: siteURL } = Astro;
     <slot name="head" />
   </head>
   <body>
-    <Nav dark />
+    <Nav />
     <main>
       <slot />
     </main>
